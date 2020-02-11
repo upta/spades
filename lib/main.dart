@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:spades/auth/auth.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey
+    return MultiProvider(
+      providers: [
+        Provider<FirebaseAuthService>(
+          create: (_) => FirebaseAuthService()
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blueGrey
+        ),
+        home: MyHomePage(title: 'Spades Tracker'),
       ),
-      home: MyHomePage(title: 'Spades Tracker'),
     );
   }
 }
