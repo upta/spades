@@ -5,21 +5,47 @@ import 'package:spades/auth/auth.dart';
 void main() => runApp(App());
 
 class App extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseAuthService>(
-          create: (_) => FirebaseAuthService()
-        )
+        Provider<FirebaseAuthService>(create: (_) => FirebaseAuthService())
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blueGrey
-        ),
-        home: MyHomePage(title: 'Spades Tracker'),
+        title: 'Spades Tracker',
+        theme: ThemeData(primarySwatch: Colors.blueGrey),
+        home: GameListPage(),
+      ),
+    );
+  }
+}
+
+class GameListPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final auth = Provider.of<FirebaseAuthService>(context, listen: false);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Game List")
+      ),
+      body: Center(
+        child: StreamBuilder(
+          stream: auth.onAuthStateChanged,
+          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+            if (snapshot.connectionState == ConnectionState.active)
+            {
+              return Text(snapshot.hasData ? snapshot.data.uid : "no user");
+            }
+            
+            return Text("no!");
+          },
+        )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: auth.signInAnonymously,
+        tooltip: 'Sign In',
+        child: Icon(Icons.supervised_user_circle)
       ),
     );
   }

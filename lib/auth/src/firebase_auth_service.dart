@@ -4,7 +4,9 @@ import 'user.dart';
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Stream<User> get onAuthStateChanged => _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
+  Stream<User> get onAuthStateChanged {
+    return _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
+  }
 
   Future<User> signInAnonymously() async {
     final result = await _firebaseAuth.signInAnonymously();
@@ -12,7 +14,7 @@ class FirebaseAuthService {
     return _userFromFirebase(result.user);
   }
 
-  _userFromFirebase(FirebaseUser user) {
+  User _userFromFirebase(FirebaseUser user) {
     if (user == null) {
       return null;
     }
