@@ -30,16 +30,12 @@ class GameListPage extends StatelessWidget {
         title: Text("Game List")
       ),
       body: Center(
-        child: StreamBuilder(
-          stream: auth.onAuthStateChanged,
-          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-            if (snapshot.connectionState == ConnectionState.active)
-            {
-              return Text(snapshot.hasData ? snapshot.data.uid : "no user");
-            }
-            
-            return Text("no!");
-          },
+        child: SignInSwitch(
+          standBy: Center(
+            child: CircularProgressIndicator(),
+          ),
+          signIn: Text("sign in, noober"),
+          landing: Text("yup, we are signed in"),
         )
       ),
       floatingActionButton: FloatingActionButton(
