@@ -23,25 +23,17 @@ class App extends StatelessWidget {
 class GameListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<FirebaseAuthService>(context, listen: false);
-
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text("Game List")
+        title: Text('Game List')
       ),
       body: Center(
-        child: SignInSwitch(
-          standBy: Center(
-            child: CircularProgressIndicator(),
-          ),
-          signIn: Text("sign in, noober"),
-          landing: Text("yup, we are signed in"),
+        child: AutoAnonymousSignIn(
+          standByBuilder: (_) => CircularProgressIndicator(),
+          errorBuilder: (_, error) => Text(error),
+          landingBuilder: (_, user) => Text('oh, hi ${user.uid}'),
         )
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: auth.signInAnonymously,
-        tooltip: 'Sign In',
-        child: Icon(Icons.supervised_user_circle)
       ),
     );
   }
