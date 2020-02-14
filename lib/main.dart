@@ -9,7 +9,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseAuthService>(create: (_) => FirebaseAuthService())
+        Provider<AuthService>(create: (_) => FirebaseAuthService())
       ],
       child: MaterialApp(
         title: 'Spades Tracker',
@@ -23,7 +23,7 @@ class App extends StatelessWidget {
 class GameListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Game List')

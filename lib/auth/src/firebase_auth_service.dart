@@ -1,7 +1,24 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'user.dart';
 
-class FirebaseAuthService {
+abstract class AuthService {
+  Future<User> signInAnonymously();
+}
+
+class MemoryAuthService implements AuthService {
+
+  final Completer<User> signInAnonymouslyCompleter = Completer();
+  Future<User> signInAnonymouslyFuture;
+
+  @override
+  Future<User> signInAnonymously() => signInAnonymouslyFuture;
+  // Future<User> signInAnonymously() => Future<User>.error("broke");
+
+}
+
+class FirebaseAuthService implements AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Stream<User> get onAuthStateChanged {

@@ -25,7 +25,7 @@ class _AutoAnonymousSignInState extends State<AutoAnonymousSignIn> {
   @override
   void initState() {
     super.initState();
-    final authService = Provider.of<FirebaseAuthService>(context, listen: false);
+    final authService = Provider.of<AuthService>(context, listen: false);
 
     future = authService.signInAnonymously();
   }
@@ -46,7 +46,7 @@ class _AutoAnonymousSignInState extends State<AutoAnonymousSignIn> {
           );
         }
         else if (snapshot.hasError) {
-          return widget.errorBuilder(context, snapshot.error);
+          return widget.errorBuilder(context, snapshot.error.toString());
         }
 
         return widget.standByBuilder(context);
